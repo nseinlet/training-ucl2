@@ -28,8 +28,10 @@
         'views/course.xml',
         'views/session.xml',
         'views/partner.xml',
+        'views/inscription.xml',
         'views/menu.xml',
         'templates.xml',
+        'data/respartnercategory.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

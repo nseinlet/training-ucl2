@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- inscription tree view -->
+        <record model="ir.ui.view" id="inscription_tree_view">
+            <field name="name">inscription.tree</field>
+            <field name="model">openacademy.inscription</field>
+            <field name="arch" type="xml">
+                <tree string="Session List">
+                    <field name="partner_id"/>
+                    <field name="session_id"/>
+                    <field name="inscription_date"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- inscription tree view -->
+        <record model="ir.ui.view" id="inscription_form_view">
+            <field name="name">inscription.form</field>
+            <field name="model">openacademy.inscription</field>
+            <field name="arch" type="xml">
+                <form string="Inscription">
+                	<sheet>
+                		<group col="4">
+                			<field name="partner_id"/>
+                    		<field name="session_id"/>
+                    		<field name="inscription_date"/>
+                		</group>
+                	</sheet>
+                    
+                </form>
+            </field>
+        </record>
+        
+    </data>
+</openerp>

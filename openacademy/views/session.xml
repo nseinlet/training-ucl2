@@ -11,7 +11,7 @@
                         <group string="General">
                             <field name="course_id"/>
                             <field name="name"/>
-                            <field name="instructor_id"/>
+                            <field name="instructor_id" context="{'default_instructor': True}"/>
                         </group>
                         <group string="Schedule">
                             <field name="start_date"/>
@@ -20,7 +20,7 @@
                         </group>
                         <notebook>
 	                        <page string="Attendees">
-	                        	<field name="attendee_ids" nolabel="1"/>
+	                        	<field name="attendee_ids" nolabel="1" widget="many2many_kanban"/>
 	                        </page>
                         </notebook>
                     </sheet>

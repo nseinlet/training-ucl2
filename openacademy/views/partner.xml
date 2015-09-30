@@ -10,6 +10,13 @@
             	<xpath expr="//field[@name='function']" position="after">
             		<field name="instructor"/>
             	</xpath>
+            	<xpath expr="//notebook" position="inside">
+            		<page string="Sessions">
+            			<group>
+            				<field name="inscription_ids" nolabel="1"/>
+            			</group>
+            		</page>
+            	</xpath>
             </field>
         </record>
         
