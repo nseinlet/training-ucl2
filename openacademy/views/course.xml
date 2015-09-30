@@ -38,7 +38,7 @@
 	                        <page string="Sessions">
 	                        	<group col="1">
 	                        		<field name="session_ids" nolabel="1">
-	                        			<tree>
+	                        			<tree editable="bottom">
 	                        				<field name="name"/>
 	                        				<field name="instructor_id"/>
 	                        			</tree>
