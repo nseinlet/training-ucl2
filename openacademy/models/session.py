@@ -17,6 +17,8 @@ class Session(models.Model):
     inscription_ids = fields.Many2one('openacademy.inscription', "session_id")
     taken_seats = fields.Integer('%age of seats', compute='_compute_taken_seats')
     active = fields.Boolean(default=True)
+    hours = fields.Float(string="Duration in hours",
+                         compute='_compute_hours', inverse='_compute_inverse_hours')
     
     @api.depends('attendee_ids', 'seats')
     def _compute_taken_seats(self):
@@ -38,6 +40,15 @@ class Session(models.Model):
             if rec.start_date and rec.end_date:
                 rec.duration = (fields.Datetime.from_string(rec.end_date) - fields.Datetime.from_string(rec.start_date)).days + 1
 
+    @api.depends('duration')
+    def _compute_hours(self):
+        for rec in self:
+            rec.hours = rec.duration * 24
+
+    def _compute_inverse_hours(self):
+        for rec in self:
+            rec.duration = rec.hours / 24
+            
     @api.onchange('attendee_ids', 'seats')
     def _onchange_seats(self):
         if self.seats<0:

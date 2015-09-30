@@ -17,7 +17,7 @@
             <field name="name">Sessions</field>
             <field name="res_model">openacademy.session</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form,calendar</field>
+            <field name="view_mode">tree,form,calendar,gantt</field>
         </record>
         <record model="ir.actions.act_window" id="inscription_list_action">
             <field name="name">Inscriptions</field>
