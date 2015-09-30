@@ -27,6 +27,7 @@
         # 'security/ir.model.access.csv',
         'views/course.xml',
         'views/session.xml',
+        'views/partner.xml',
         'views/menu.xml',
         'templates.xml',
     ],

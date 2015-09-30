@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    	<!-- Form -->
+    	<record model="ir.ui.view" id="partner_form_view">
+            <field name="name">partner.instructor.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//field[@name='function']" position="after">
+            		<field name="instructor"/>
+            	</xpath>
+            </field>
+        </record>
+        
+        <!-- Tree -->
+    	<record model="ir.ui.view" id="partner_tree_view">
+            <field name="name">partner.instructor.tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//field[@name='phone']" position="replace">
+            		
+            	</xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
+
+
+
+
+
