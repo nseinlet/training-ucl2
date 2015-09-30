@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api
+from openerp.exceptions import ValidationError
 
  
 class Session(models.Model):
@@ -40,3 +41,10 @@ class Session(models.Model):
                             'message': 'Not enough seats',
                 }
             }
+            
+    @api.constrains('instructor_id', 'attendee_ids')
+    def _const_instructor(self):
+        for rec in self:
+            if rec.instructor_id and rec.instructor_id.id in rec.attendee_ids.ids:
+                raise ValidationError("Instructor cannot be an attendee of his own session")
+            
