@@ -10,6 +10,7 @@
             		<field name="name"/>
             		<field name="description"/>
             		<field name="responsible_id" options="{'no_create': True, 'no_open': False}"/>
+            		<filter name="my" string="My" domain="[('responsible_id', '=', uid)]"/>
             	</search>
             </field>
         </record>

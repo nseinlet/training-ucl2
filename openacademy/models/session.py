@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api
 from openerp.exceptions import ValidationError
-
+from datetime import timedelta
  
 class Session(models.Model):
     _name = 'openacademy.session'
 
     name = fields.Char(required=True)
     start_date = fields.Date(default=fields.Date.today)
+    end_date = fields.Date(compute="_compute_end_date", inverse="_compute_inverse_end_date", store=True)
     duration = fields.Float(digits=(6, 2), help="Duration in days")
     seats = fields.Integer(string="Number of seats")
     instructor_id = fields.Many2one('res.partner', string="Instructor", domain=['|', ('instructor', '=', True), ('category_id.name', 'like', 'Teacher')])
@@ -25,6 +26,18 @@ class Session(models.Model):
             else:
                 rec.taken_seats = 100 * len(rec.attendee_ids) / rec.seats
                 
+    @api.depends('start_date', 'duration')
+    def _compute_end_date(self):
+        for rec in self:
+            if rec.start_date and rec.duration:
+                rec.end_date = fields.Datetime.from_string(rec.start_date) + timedelta(days=rec.duration, seconds=-1)
+    
+    @api.onchange('end_date')
+    def _compute_inverse_end_date(self):
+        for rec in self:
+            if rec.start_date and rec.end_date:
+                rec.duration = (fields.Datetime.from_string(rec.end_date) - fields.Datetime.from_string(rec.start_date)).days + 1
+
     @api.onchange('attendee_ids', 'seats')
     def _onchange_seats(self):
         if self.seats<0:
