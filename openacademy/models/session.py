@@ -19,6 +19,13 @@ class Session(models.Model):
     active = fields.Boolean(default=True)
     hours = fields.Float(string="Duration in hours",
                          compute='_compute_hours', inverse='_compute_inverse_hours')
+    attendees_counts = fields.Integer(compute='_compute_attendees_count', store=True)
+    color = fields.Integer()
+    state = fields.Selection((('draft', 'Draft'),
+                              ('in_progress', 'In progress'),
+                              ('done', 'Done')),
+                             string = "State", default='draft',
+                             )
     
     @api.depends('attendee_ids', 'seats')
     def _compute_taken_seats(self):
@@ -48,6 +55,11 @@ class Session(models.Model):
     def _compute_inverse_hours(self):
         for rec in self:
             rec.duration = rec.hours / 24
+    
+    @api.depends('attendee_ids')
+    def _compute_attendees_count(self):
+        for rec in self:
+            rec.attendees_counts = len(rec.attendee_ids)
             
     @api.onchange('attendee_ids', 'seats')
     def _onchange_seats(self):
@@ -72,3 +84,16 @@ class Session(models.Model):
             if rec.instructor_id and rec.instructor_id.id in rec.attendee_ids.ids:
                 raise ValidationError("Instructor cannot be an attendee of his own session")
             
+    @api.multi
+    def set_draft(self):
+        for rec in self:
+            rec.state = 'draft'
+            
+    @api.one
+    def set_in_progress(self):
+        self.state = 'in_progress'
+        
+    @api.multi
+    def set_done(self):
+        self.write({'state': 'done'})
+        

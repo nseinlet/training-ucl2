@@ -20,15 +20,18 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['mail'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/res.groups.csv',
+        'security/ir.model.access.csv',
+        'security/rules.xml',
         'views/course.xml',
         'views/session.xml',
         'views/partner.xml',
         'views/inscription.xml',
+        'views/entity.xml',
         'views/menu.xml',
         'templates.xml',
         'data/respartnercategory.xml',

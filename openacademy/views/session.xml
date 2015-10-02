@@ -28,6 +28,13 @@
             <field name="model">openacademy.session</field>
             <field name="arch" type="xml">
                 <form string="Session Form">
+                	<header>
+                		<button string="Draft" type="object" name="set_draft" states="in_progress,done"/>
+                		<button string="In progress" type="object" name="set_in_progress" states="draft"/>
+                		<button string="Done" type="object" name="set_done" class="oe_highlight" states="in_progress"/>
+                		
+                		<field name="state" widget="statusbar" clickable="True"/>
+                	</header>
                     <sheet>
                     	<group col="2" colspan="4">
 	                        <group string="General">
@@ -41,12 +48,12 @@
 	                            <field name="duration"/>
 	                            <field name="end_date"/>
 	                            <field name="seats"/>
-	                            <field name="taken_seats" widget="progressbar"/>
+	                            <field name="taken_seats" widget="progressbar" states="draft,in_progress"/>
 	                        </group>
                         </group>
                         <notebook>
 	                        <page string="Attendees">
-	                        	<field name="attendee_ids" nolabel="1" widget="many2many_kanban"/>
+	                        	<field name="attendee_ids" nolabel="1" widget="many2many_tags"/>
 	                        </page>
                         </notebook>
                     </sheet>
@@ -67,6 +74,7 @@
                     <field name="duration" invisible="1"/>
                     <field name="seats"/>
                     <field name="taken_seats" widget="progressbar"/>
+                    <field name="attendee_ids" widget="many2many_tags"/>
                 </tree>
             </field>
         </record>
@@ -95,5 +103,77 @@
             </field>
         </record>
         
+        <!-- Graph -->
+        <record model="ir.ui.view" id="session_graph_view">
+            <field name="name">session.graph</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <graph string="Session analysis" type="pivot">
+                    <field name="course_id" type="row"/>
+                    <field name="name" type="row"/>
+                    <field name="instructor_id" type="col"/>
+                    <field name="seats" type="measure"/>
+                    <field name="attendees_counts" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        
+        <!-- Kanban -->
+        <record model="ir.ui.view" id="session_kanban_view">
+            <field name="name">session.kanban</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <kanban string="Sessions" default_group_by="course_id">
+                	<field name="color"/>
+                	<field name="attendee_ids"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div
+                                    t-attf-class="oe_kanban_color_{{kanban_getcolor(record.color.raw_value)}}
+                                                  oe_kanban_global_click_edit oe_semantic_html_override
+                                                  oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
+                                <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
+                                
+                                <div class="oe_dropdown_kanban">
+                                    <!-- dropdown menu -->
+                                    <div class="oe_dropdown_toggle">
+                                        <span class="oe_e">#</span>
+                                        <ul class="oe_dropdown_menu">
+                                            <li>
+                                                <a type="delete">Delete</a>
+                                            </li>
+                                            <li>
+                                                <ul class="oe_kanban_colorpicker"
+                                                    data-field="color"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="oe_clear"></div>
+                                </div>
+                                <div t-attf-class="oe_kanban_content">
+                                    <!-- title -->
+                                    Session name:
+                                    <field name="name"/>
+                                    <br/>
+                                    Start date:
+                                    <field name="start_date"/>
+                                    <br/>
+                                    duration:
+                                    <field name="duration"/>
+                                </div>
+                                <div class="oe_kanban_footer_left">
+                                    <div class="oe_right">
+                                        <t t-foreach="record.attendee_ids.raw_value" t-as="attendee">
+                                            <img t-att-src="kanban_image('res.partner', 'image', attendee)"  width="24" height="24" class="oe_kanban_avatar"/>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"/>
+                            </div>
+                        </t>
+                	</templates>
+                </kanban>
+            </field>
+        </record>
     </data>
 </openerp>

@@ -4,11 +4,14 @@ from openerp import models, fields, api
 
 class Course(models.Model):
     _name = 'openacademy.course'
-
-    name = fields.Char(required=True)
+    _inherit = 'mail.thread'
+    
+    name = fields.Char(required=True, track_visibility="always")
     description = fields.Text()
-    responsible_id = fields.Many2one('res.users', string="Responsible")
+    responsible_id = fields.Many2one('res.users', string="Responsible", track_visibility="on_change")
     session_ids = fields.One2many('openacademy.session', 'course_id', string="Sessions")
+    entity_id = fields.Many2one('openacademy.entity')
+    entity2_id = fields.Many2one('openacademy.entity', domain="[('id', 'child_of', entity_id), ('id', '!=', entity_id)]")
     
     @api.multi
     def copy(self, default=None):

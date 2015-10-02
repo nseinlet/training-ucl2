@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    
+    	<!-- Form -->
+        <record model="ir.ui.view" id="entity_form_view">
+            <field name="name">entity.form</field>
+            <field name="model">openacademy.entity</field>
+            <field name="arch" type="xml">
+                <form string="Entity Form">
+                    <sheet>
+                        <group col="2">
+	                        <field name="parent_id" attrs="{'invisible': [('name', '=', 'UCL')], 'required': [('name', '!=', 'UCL')]}"/>
+	                        <field name="name"/>
+                        </group>
+                        
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+        
+    </data>
+</openerp>
