@@ -36,6 +36,15 @@
                 		<field name="state" widget="statusbar" clickable="True"/>
                 	</header>
                     <sheet>
+                    	<div class="oe_right oe_button_box" name="buttons">
+	                    	<button class="oe_inline oe_stat_button" type="object" name="attendees_list" icon="fa-briefcase">
+						        <field name="attendees_counts" string="Students" widget="statinfo"/>
+						    </button>
+						    <button class="oe_stat_button oe_inline" type="object" name="attendees_list">
+						        <field name="taken_seats" string="Seats" widget="percentpie"/>
+						    </button>
+	                    </div>
+                    
                     	<group col="2" colspan="4">
 	                        <group string="General">
 	                            <field name="course_id"/>
@@ -48,7 +57,7 @@
 	                            <field name="duration"/>
 	                            <field name="end_date"/>
 	                            <field name="seats"/>
-	                            <field name="taken_seats" widget="progressbar" states="draft,in_progress"/>
+	                            <!-- <field name="taken_seats" widget="progressbar"/> -->
 	                        </group>
                         </group>
                         <notebook>

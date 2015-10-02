@@ -97,3 +97,14 @@ class Session(models.Model):
     def set_done(self):
         self.write({'state': 'done'})
         
+    @api.multi
+    def attendees_list(self):
+        return {
+            'name': 'Students',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'res.partner',
+            'type': 'ir.actions.act_window',
+            'domain': [['id', 'in', self.attendee_ids.ids]],
+        }
+        
