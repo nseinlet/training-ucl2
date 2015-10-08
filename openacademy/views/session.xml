@@ -79,6 +79,7 @@
             <field name="model">openacademy.session</field>
             <field name="arch" type="xml">
                 <tree string="Session List" colors="blue:duration&lt;5;red:duration&gt;=15;green:1==1">
+                    <field name="sequence" widget="handle"/>
                     <field name="course_id"/>
                     <field name="name"/>
                     <field name="instructor_id"/>
@@ -172,6 +173,9 @@
                                     <br/>
                                     duration:
                                     <field name="duration"/>
+                                    <br/>
+                                    Priority:
+                                    <field name="priority" widget="priority"/>
                                 </div>
                                 <div class="oe_kanban_footer_left">
                                     <div class="oe_right">

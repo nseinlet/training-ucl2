@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['mail'],
+    'depends': ['mail', 'board', 'website'],
 
     # always loaded
     'data': [
@@ -37,6 +37,8 @@
         'data/respartnercategory.xml',
         'views/wizard.xml',
         'views/wizard2.xml',
+        'views/reports.xml',
+        'views/dashboard.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

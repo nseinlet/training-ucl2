@@ -5,8 +5,12 @@ from datetime import timedelta
  
 class Session(models.Model):
     _name = 'openacademy.session'
-
+    _order = 'sequence,name'
+    _inherit = 'ir.needaction_mixin'
+    
     name = fields.Char(required=True)
+    sequence = fields.Integer(index=True)
+    priority = fields.Selection((('0', 'low'), ('1', 'medium'), ('2', 'high'), ('3', 'nuclear')), default='0')
     start_date = fields.Date(default=fields.Date.today)
     end_date = fields.Date(compute="_compute_end_date", inverse="_compute_inverse_end_date", store=True)
     duration = fields.Float(digits=(6, 2), help="Duration in days")
@@ -125,3 +129,8 @@ class Session(models.Model):
             'type': 'ir.actions.act_window',
             'target': 'new',
         }
+        
+    @api.model
+    def _needaction_domain_get(self):
+        return [('taken_seats', '>=', 80)]
+    
