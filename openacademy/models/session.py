@@ -26,6 +26,7 @@ class Session(models.Model):
                               ('done', 'Done')),
                              string = "State", default='draft',
                              )
+    country_id = fields.Many2one('res.country', string="Country", related="instructor_id.country_id")
     
     @api.depends('attendee_ids', 'seats')
     def _compute_taken_seats(self):
