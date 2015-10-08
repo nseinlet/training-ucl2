@@ -35,6 +35,8 @@
         'views/menu.xml',
         'templates.xml',
         'data/respartnercategory.xml',
+        'views/wizard.xml',
+        'views/wizard2.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -108,3 +108,19 @@ class Session(models.Model):
             'domain': [['id', 'in', self.attendee_ids.ids]],
         }
         
+    @api.multi
+    def launch_wizard2(self):
+        wiz = self.env['openacademy.wizard2'].create({
+            'session_id': self.id,
+        })
+        wiz.country_id = self.env['res.country'].search([('name' , 'ilike', 'fr')])[0]
+        
+        return {
+            'name': 'Wizard 2',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'openacademy.wizard2',
+            'res_id': wiz.id,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }

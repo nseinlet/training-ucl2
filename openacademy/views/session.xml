@@ -33,6 +33,8 @@
                 		<button string="In progress" type="object" name="set_in_progress" states="draft"/>
                 		<button string="Done" type="object" name="set_done" class="oe_highlight" states="in_progress"/>
                 		
+                		<button string="Launch Wizard" type="object" name="launch_wizard2" class="oe_highlight"/>
+                		
                 		<field name="state" widget="statusbar" clickable="True"/>
                 	</header>
                     <sheet>

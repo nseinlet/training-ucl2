@@ -1,0 +1,26 @@
+<openerp>
+<data>
+	        <record model="ir.ui.view" id="wizard2_form_view">
+            <field name="name">wizard2.form</field>
+            <field name="model">openacademy.wizard2</field>
+            <field name="arch" type="xml">
+                <form string="Add Attendees">
+                	<sheet>
+                    <group>
+                    	<field name="state" invisible="True"/>
+                        <field name="session_id" readonly="True" states="step1"/>
+                        <field name="country_id" states="step2"/>
+                    </group>
+                    </sheet>
+                    <footer>
+                    	<button type="object" name="step2" string="Next" class="oe_highlight" states="step1"/>
+                    	<button type="object" name="validate" string="Validate" class="oe_highlight" states="step2"/>
+                    	or
+                    	<button special="cancel" string="Cancel"/>
+                    
+                    </footer>
+                </form>
+            </field>
+        </record>
+	
+</data></openerp>
